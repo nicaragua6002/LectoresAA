@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LectoresAA.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="LectoresAAStoreContainer">
+    <EntitySet Name="Tipos" EntityType="LectoresAA.Store.Tipos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Publicaciones" EntityType="LectoresAA.Store.Publicaciones" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comentarios" EntityType="LectoresAA.Store.Comentarios" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Capitulos" EntityType="LectoresAA.Store.Capitulos" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="TipoPublicacion" Association="LectoresAA.Store.TipoPublicacion">
+      <End Role="Tipo" EntitySet="Tipos" />
+      <End Role="Publicacion" EntitySet="Publicaciones" />
+    </AssociationSet>
+    <AssociationSet Name="PublicacionCapitulo" Association="LectoresAA.Store.PublicacionCapitulo">
+      <End Role="Publicacion" EntitySet="Publicaciones" />
+      <End Role="Capitulo" EntitySet="Capitulos" />
+    </AssociationSet>
+    <AssociationSet Name="CapituloComentario" Association="LectoresAA.Store.CapituloComentario">
+      <End Role="Capitulo" EntitySet="Capitulos" />
+      <End Role="Comentario" EntitySet="Comentarios" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Tipos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Publicaciones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Autor" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Titulo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fecha" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TipoId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comentarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fecha" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Contenido" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CapituloId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Capitulos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titulo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fecha" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Contenido" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PublicacionId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="TipoPublicacion">
+    <End Role="Tipo" Type="LectoresAA.Store.Tipos" Multiplicity="1" />
+    <End Role="Publicacion" Type="LectoresAA.Store.Publicaciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Publicacion">
+        <PropertyRef Name="TipoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PublicacionCapitulo">
+    <End Role="Publicacion" Type="LectoresAA.Store.Publicaciones" Multiplicity="1" />
+    <End Role="Capitulo" Type="LectoresAA.Store.Capitulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Publicacion">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Capitulo">
+        <PropertyRef Name="PublicacionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CapituloComentario">
+    <End Role="Capitulo" Type="LectoresAA.Store.Capitulos" Multiplicity="1" />
+    <End Role="Comentario" Type="LectoresAA.Store.Comentarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Capitulo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comentario">
+        <PropertyRef Name="CapituloId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="LectoresAA" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="LectoresAAContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tipos" EntityType="LectoresAA.Tipo" />
+          <EntitySet Name="Publicaciones" EntityType="LectoresAA.Publicacion" />
+          <EntitySet Name="Comentarios" EntityType="LectoresAA.Comentario" />
+          <EntitySet Name="Capitulos" EntityType="LectoresAA.Capitulo" />
+          <AssociationSet Name="TipoPublicacion" Association="LectoresAA.TipoPublicacion">
+            <End Role="Tipo" EntitySet="Tipos" />
+            <End Role="Publicacion" EntitySet="Publicaciones" />
+          </AssociationSet>
+          <AssociationSet Name="PublicacionCapitulo" Association="LectoresAA.PublicacionCapitulo">
+            <End Role="Publicacion" EntitySet="Publicaciones" />
+            <End Role="Capitulo" EntitySet="Capitulos" />
+          </AssociationSet>
+          <AssociationSet Name="CapituloComentario" Association="LectoresAA.CapituloComentario">
+            <End Role="Capitulo" EntitySet="Capitulos" />
+            <End Role="Comentario" EntitySet="Comentarios" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Tipo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" />
+          <NavigationProperty Name="Publicaciones" Relationship="LectoresAA.TipoPublicacion" FromRole="Tipo" ToRole="Publicacion" />
+        </EntityType>
+        <EntityType Name="Publicacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Autor" Type="String" Nullable="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" />
+          <Property Name="Fecha" Type="String" Nullable="false" />
+          <Property Name="User" Type="String" Nullable="false" />
+          <NavigationProperty Name="Tipo" Relationship="LectoresAA.TipoPublicacion" FromRole="Publicacion" ToRole="Tipo" />
+          <Property Name="TipoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Capitulos" Relationship="LectoresAA.PublicacionCapitulo" FromRole="Publicacion" ToRole="Capitulo" />
+        </EntityType>
+        <EntityType Name="Comentario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User" Type="String" Nullable="false" />
+          <Property Name="Fecha" Type="String" Nullable="false" />
+          <Property Name="Contenido" Type="String" Nullable="false" />
+          <NavigationProperty Name="Capitulo" Relationship="LectoresAA.CapituloComentario" FromRole="Comentario" ToRole="Capitulo" />
+          <Property Name="CapituloId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Capitulo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" Nullable="false" />
+          <Property Name="Fecha" Type="String" Nullable="false" />
+          <Property Name="Contenido" Type="String" Nullable="false" />
+          <NavigationProperty Name="Publicacion" Relationship="LectoresAA.PublicacionCapitulo" FromRole="Capitulo" ToRole="Publicacion" />
+          <Property Name="PublicacionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comentarios" Relationship="LectoresAA.CapituloComentario" FromRole="Capitulo" ToRole="Comentario" />
+        </EntityType>
+        <Association Name="TipoPublicacion">
+          <End Type="LectoresAA.Tipo" Role="Tipo" Multiplicity="1" />
+          <End Type="LectoresAA.Publicacion" Role="Publicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Publicacion">
+              <PropertyRef Name="TipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PublicacionCapitulo">
+          <End Type="LectoresAA.Publicacion" Role="Publicacion" Multiplicity="1" />
+          <End Type="LectoresAA.Capitulo" Role="Capitulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publicacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Capitulo">
+              <PropertyRef Name="PublicacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CapituloComentario">
+          <End Type="LectoresAA.Capitulo" Role="Capitulo" Multiplicity="1" />
+          <End Type="LectoresAA.Comentario" Role="Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Capitulo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comentario">
+              <PropertyRef Name="CapituloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LectoresAAStoreContainer" CdmEntityContainer="LectoresAAContainer">
+    <EntitySetMapping Name="Tipos">
+      <EntityTypeMapping TypeName="IsTypeOf(LectoresAA.Tipo)">
+        <MappingFragment StoreEntitySet="Tipos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Publicaciones">
+      <EntityTypeMapping TypeName="IsTypeOf(LectoresAA.Publicacion)">
+        <MappingFragment StoreEntitySet="Publicaciones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Autor" ColumnName="Autor" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="TipoId" ColumnName="TipoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comentarios">
+      <EntityTypeMapping TypeName="IsTypeOf(LectoresAA.Comentario)">
+        <MappingFragment StoreEntitySet="Comentarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+          <ScalarProperty Name="CapituloId" ColumnName="CapituloId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Capitulos">
+      <EntityTypeMapping TypeName="IsTypeOf(LectoresAA.Capitulo)">
+        <MappingFragment StoreEntitySet="Capitulos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+          <ScalarProperty Name="PublicacionId" ColumnName="PublicacionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
